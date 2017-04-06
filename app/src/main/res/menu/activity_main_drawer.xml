@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_all"
+
+            android:title="All" />
+        <item
+            android:id="@+id/nav_breakFast"
+
+            android:title="BreakFast" />
+        <item
+            android:id="@+id/nav_lunch"
+
+            android:title="Lunch" />
+        <item
+            android:id="@+id/nav_Super"
+
+            android:title="Super" />
+        <item
+            android:id="@+id/nav_dinner"
+
+            android:title="Dinner" />
+        <item
+            android:id="@+id/nav_drinks"
+
+            android:title="Drinks" />
+        <item
+            android:id="@+id/nav_vegetarian"
+
+            android:title="Vegetarian" />
+
+
+
+    </group>
+
+    <item android:title="Tools">
+        <menu>
+            <item
+            android:id="@+id/nav_subscription"
+
+            android:title="Subscription" />
+            <item
+                android:id="@+id/nav_logout"
+
+                android:title="Logout" />
+            <item
+                android:id="@+id/nav_login"
+
+                android:title="login" />
+        </menu>
+    </item>
+
+</menu>

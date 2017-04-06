@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+
+        android:id="@+id/action_menus"
+
+        android:enabled="true"
+
+        android:icon="@drawable/ic_dashboard_white_24dp"
+
+        android:title="@string/text_menu"
+
+        app:showAsAction="ifRoom" />
+
+    <item
+
+        android:id="@+id/action_cart"
+
+        android:enabled="true"
+
+        android:icon="@drawable/ic_shopping_cart_white_24dp"
+
+        android:title="@string/text_cart"
+
+        app:showAsAction="ifRoom" />
+
+    <item
+
+        android:id="@+id/action_track"
+
+        android:enabled="true"
+
+        android:icon="@drawable/ic_compare_arrows_white_24dp"
+
+        android:title="@string/text_Track"
+
+        app:showAsAction="ifRoom" />
+    <item
+
+        android:id="@+id/action_history"
+
+        android:enabled="true"
+
+        android:icon="@drawable/ic_history_white_24dp"
+
+        android:title="@string/text_History"
+
+        app:showAsAction="ifRoom" />
+
+</menu>

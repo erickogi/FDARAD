@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    app:cardPreventCornerOverlap="true"
+    android:layout_margin="2dp"
+    app:cardBackgroundColor="#FFFFFF">
+   <!-- app:cardCornerRadius="6dp"
+    app:cardElevation="5dp"-->
+    <!--app:cardUseCompatPadding="true"-->
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:scaleType="centerInside"
+            android:adjustViewBounds="true"
+            android:fitsSystemWindows="true"
+            android:src="@drawable/web"
+
+            android:layout_marginRight="10dp"
+            android:id="@+id/hotel_image"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textColor="@android:color/holo_orange_dark"
+
+                android:textSize="18dp"
+                android:textStyle="bold|italic"
+                android:text="This is our Title"
+                android:id="@+id/hotel_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:textColor="@android:color/black"
+                android:layout_marginTop="8dp"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:text="@string/itemContent"
+                android:id="@+id/hotel_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <RelativeLayout
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textStyle="bold|italic"
+                    android:textSize="17sp"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:layout_marginTop="8dp"
+                    android:text="hours"
+                    android:id="@+id/hotel_hours"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+<LinearLayout
+    android:layout_alignParentRight="true"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <Button
+        android:background="@drawable/ic_stars_yellow_a700_24dp"
+        android:layout_marginTop="8dp"
+
+
+        android:id="@+id/btns1"
+        android:layout_width="@dimen/starWidth"
+        android:layout_height="@dimen/starHeight"/>
+    <Button
+        android:background="@drawable/ic_stars_yellow_a700_24dp"
+        android:layout_marginTop="8dp"
+
+
+        android:id="@+id/btns2"
+        android:layout_width="@dimen/starWidth"
+        android:layout_height="@dimen/starHeight" />
+    <Button
+        android:background="@drawable/ic_stars_yellow_a700_24dp"
+        android:layout_marginTop="8dp"
+
+
+        android:id="@+id/item_btns3"
+        android:layout_width="@dimen/starWidth"
+        android:layout_height="@dimen/starHeight"/>
+    <Button
+        android:background="@drawable/ic_stars_yellow_a700_24dp"
+        android:layout_marginTop="8dp"
+
+
+        android:id="@+id/btns4"
+        android:layout_width="@dimen/starWidth"
+        android:layout_height="@dimen/starHeight" />
+    <Button
+        android:background="@drawable/ic_stars_yellow_a700_24dp"
+        android:layout_marginTop="8dp"
+
+
+        android:id="@+id/btn5"
+        android:layout_width="@dimen/starWidth"
+        android:layout_height="@dimen/starHeight" />
+</LinearLayout>
+            </RelativeLayout>
+
+
+
+
+        </LinearLayout>
+
+        <TextView
+            android:textColor="@android:color/holo_orange_dark"
+            android:visibility="invisible"
+            android:textSize="5dp"
+
+            android:text="1"
+            android:id="@+id/hotel_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+</android.support.v7.widget.CardView>
