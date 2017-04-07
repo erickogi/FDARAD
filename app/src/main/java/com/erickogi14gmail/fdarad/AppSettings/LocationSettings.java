@@ -1,6 +1,7 @@
 package com.erickogi14gmail.fdarad.AppSettings;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 //import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -42,23 +44,15 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class LocationSettings extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
- final   static ArrayList<String> CountryLIST =new ArrayList<>();
- final   static ArrayList<String> CountyLIST = new ArrayList<>();
- final   static ArrayList<String> TownLIST = new ArrayList<>();
 
 
-    //ArrayList<HotelModel> hotel_model;
-    //RecyclerView lv;
+
     String [] uri={
             "http://erickogi.co.ke/fdarad/api/?action=get_country_locations_by_id",
             "http://erickogi.co.ke/fdarad/api/?action=get_state_locations_by_country_name&country_name=",
             "http://erickogi.co.ke/fdarad/api/?action=get_town_locations_by_state_name&state_name="
     };
-Spinner spinnerC;
-    Spinner spinnerCc;
-    Spinner spinnerT;
 
-    EditText edtCountry,edtCounty,edtTown;
 
     static Context context;
     static View view;
@@ -69,73 +63,55 @@ Spinner spinnerC;
     int b=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ArrayList<String> B= new ArrayList<>();
+       B.add("Kenya");
+        B.add("UGANDA");
+        B.add("TANZANIA");
+
         super.onCreate(savedInstanceState);
 
-        CountryLIST.clear();
-        CountyLIST.clear();
-        TownLIST.clear();
-        for(int a=0;a<3;a++)
-        {
-
-            requestData(uri[b], b);
-
-            b++;
-            Log.d("CounList", CountryLIST+" "  +CountyLIST+" "+TownLIST);
-        }
 
         setContentView(R.layout.activity_location_settings);
+
+
+
+
+
+        arrayAdapterc = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, B );
+
+        MaterialBetterSpinner materialDesignSpinner = (MaterialBetterSpinner)
+                findViewById(R.id.android_material_design_spinner_country);
+        materialDesignSpinner.setAdapter(arrayAdapterc);
+
+
+
+
+
+        arrayAdapterc  = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line,requestData(uri[1] , "state_name"));
+        MaterialBetterSpinner materialDesignSpinnerc = (MaterialBetterSpinner)
+                findViewById(R.id.android_material_design_spinner_county);
+        materialDesignSpinnerc.setAdapter(arrayAdapterc);
+
+
+        arrayAdapterc = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, requestData(uri[2] , "town_name"));
+        MaterialBetterSpinner materialDesignSpinnert = (MaterialBetterSpinner)
+                findViewById(R.id.android_material_design_spinner_town);
+        materialDesignSpinnert.setAdapter(arrayAdapterc);
+
+
+
+
+
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
- /*       edtCountry=(EditText)findViewById(R.id.input_country);
-        edtCounty=(EditText)findViewById(R.id.input_County);
-        edtTown=(EditText)findViewById(R.id.input_Town);*/
 
-        spinnerC=(Spinner)findViewById(R.id.spiner_country);
-        spinnerCc=(Spinner)findViewById(R.id.spiner_county);
-        spinnerT=(Spinner)findViewById(R.id.spiner_town);
-
-        ArrayAdapter<String> widgetModeAdapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_item, CountryLIST);
-        widgetModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerC.setAdapter(widgetModeAdapter);
-
-        ArrayAdapter<String> widgetModeAdapter1 = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_item, CountyLIST);
-        widgetModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCc.setAdapter(widgetModeAdapter1);
-
-        ArrayAdapter<String> widgetModeAdapter2 = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_item, TownLIST);
-        widgetModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerT.setAdapter(widgetModeAdapter1);
-
-
-
-       // spinnerC. setOnItemSelectedListener(new CustomOnItemSelectedListener());
-        spinnerC.setOnItemSelectedListener(this);
-/*spinnerC.setOnItemClickListener(new AdapterView.OnItemSelectedListener() {
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
-});
-
-         spinnerC.setOnItemClickListener(new AdapterView.OnItemSelectedListener() {
-             @Override
-             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-               edtCountry.setText(parent.getItemAtPosition(position).toString());
-
-             }
-
-             @Override
-             public void onNothingSelected(AdapterView<?> parent) {
-                 //Another interface callback
-             }
-         });*/
 
 
 
@@ -149,48 +125,14 @@ Spinner spinnerC;
                         .setAction("Action", null).show();
             }
         });
-        //setAd();
-
-      //  MaterialBetterSpinner materialDesignSpinnerc = (MaterialBetterSpinner)
-       //         findViewById(R.id.android_material_design_spinner_country);
-       // materialDesignSpinnerc.
 
     }
 
 
-public void setAd(){
-  //
-   /*arrayAdapterc  = new ArrayAdapter<String>(this,
-            android.R.layout.simple_dropdown_item_1line, CountyLIST);
-    MaterialBetterSpinner materialDesignSpinnerc = (MaterialBetterSpinner)
-            findViewById(R.id.android_material_design_spinner_county);
-    materialDesignSpinnerc.setAdapter(arrayAdapterc);
 
 
-    arrayAdapterc = new ArrayAdapter<String>(this,
-            android.R.layout.simple_dropdown_item_1line, TownLIST);
-    MaterialBetterSpinner materialDesignSpinnert = (MaterialBetterSpinner)
-            findViewById(R.id.android_material_design_spinner_town);
-    materialDesignSpinnert.setAdapter(arrayAdapterc);
-
-
-
-
-    if (CountryLIST.isEmpty()) {
-        String[] nm={"Kenya","Uganda","Tanzania"};
-        arrayAdapterc = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, nm);
-    }else{
-        arrayAdapterc = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, CountryLIST);
-    }
-    MaterialBetterSpinner materialDesignSpinner = (MaterialBetterSpinner)
-            findViewById(R.id.android_material_design_spinner_country);
-    materialDesignSpinner.setAdapter(arrayAdapterc);*/
-}
-
-    public boolean requestData(final String uri , final int b) {
-
+    public ArrayList<String>  requestData(final String uri , final String w) {
+final ArrayList<String> items=new ArrayList<>();
         // StringRequest request = new StringRequest(uri,
         StringRequest stringRequest = new StringRequest(Request.Method.GET, uri,
 
@@ -210,17 +152,10 @@ public void setAd(){
 
                                     JSONObject obj = dish_arry.getJSONObject(i);
                                     Log.d("aa0",String.valueOf(b));
-                                    if(b==0) {
 
-                                        CountryLIST.add(obj.getString("country_name")) ;
 
-                                    }
-                                    else if(b==1){
-                                        CountyLIST.add (obj.getString("state_name"));
-                                    }
-                                    else if(b==2){
-                                        TownLIST.add(obj.getString("town_name"));
-                                    }
+                                        items.add(obj.getString(w)) ;
+
 
                                 }
                                /* arrayAdapterc = new ArrayAdapter<String>(getApplicationContext(),
@@ -265,7 +200,7 @@ public void setAd(){
         queue.add(stringRequest);
         context=getApplicationContext();
 
-        return success;
+        return items;
     }
 String c="";
 

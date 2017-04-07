@@ -31,6 +31,8 @@ import com.erickogi14gmail.fdarad.dishes.DishJsonParser;
 import com.erickogi14gmail.fdarad.dishes.Model;
 import com.erickogi14gmail.fdarad.dishes.ModelAdapter;
 import com.erickogi14gmail.fdarad.mPicasso.PicassoClient;
+import com.erickogi14gmail.fdarad.order.PlaceOrder;
+import com.erickogi14gmail.fdarad.utils.RecyclerTouchListener;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import org.json.JSONArray;
@@ -45,7 +47,7 @@ TextView _hotel_description ,_hotel_working_hours,_hotel_location,_hotel_pickup_
     String urlDishTypes="http://erickogi.co.ke/fdarad/api/?action=get_dish_type_by_hotel_id&hotel_id=";
     String urlDishByTypeByHotel="";
 
-
+    String [] dishType={"","BreakFast","Lunch","Dinner","Supper","vegetarian"};
     static Context context;
     static View view;
     static RequestQueue queue ;
@@ -58,6 +60,7 @@ TextView _hotel_description ,_hotel_working_hours,_hotel_location,_hotel_pickup_
 
     ArrayList<Model> dish_model;
     RecyclerView lv;
+    String urid = "http://erickogi.co.ke/fdarad/api/?action=get_dish_by_type&dish_type=";
     String uri = "http://erickogi.co.ke/fdarad/api/?action=get_dish_by_hotel_id&hotel_id=";
     ModelAdapter adapter;
 
@@ -92,13 +95,24 @@ TextView _hotel_description ,_hotel_working_hours,_hotel_location,_hotel_pickup_
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //;
         setContentView(R.layout.activity_hotel_view);
+
+        ArrayAdapter<String> arrayAdapterc = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, dishType);
+        MaterialBetterSpinner materialDesignSpinnerc = (MaterialBetterSpinner)
+                findViewById(R.id.android_material_design_spinner_dishtype);
+        materialDesignSpinnerc.setAdapter(arrayAdapterc);
+
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Intent intent=getIntent();
         toolbar.setTitle( intent.getStringExtra("name"));
-        toolbar.setTitleTextColor(0xFFFFFFFF);
-        //setSupportActionBar(toolbar);
+        //toolbar.setTitleTextColor(FFFFFFFF);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         CollapsingToolbarLayout collapsingToolbarLayout=(CollapsingToolbarLayout)findViewById(R.id.toolbar_layout) ;
 
@@ -131,9 +145,10 @@ TextView _hotel_description ,_hotel_working_hours,_hotel_location,_hotel_pickup_
 
 
 
+ArrayList<String> types=new ArrayList<>();
+        types.add("ALL");
 
-
-
+      //  setDishTypesSpinner(types);
 
 
 
@@ -142,12 +157,56 @@ TextView _hotel_description ,_hotel_working_hours,_hotel_location,_hotel_pickup_
         PicassoClient.LoadImage (this,intent.getStringExtra("image"),img);
         //ct.setBackground(img.getDrawable());
         collapsingToolbarLayout.setBackground(img.getDrawable());
-
+        requestDishData(urid);
         requestData(urlDishByTypeByHotel,1);
 
 
 
         lv=(RecyclerView)findViewById(R.id.recycle_view_hoteldish);
+
+
+        lv.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), lv, new RecyclerTouchListener.ClickListener() {
+
+            @Override
+            public void onClick(View view, int position) {
+                Model model = dish_model.get(position);
+
+                Intent intent=new Intent(HotelView.this, PlaceOrder.class);
+
+                intent.putExtra("dish_name",model.getDish_name());
+                intent.putExtra("dish_description",model.getDish_description());
+                intent.putExtra("dish_image",model.getDish_image());
+                intent.putExtra("dish_price",model.getDish_price());
+                intent.putExtra("dish_id",model.getDish_id());
+
+                startActivity(intent);
+
+
+
+
+
+               // Toast.makeText(getApplicationContext(), model.getDish_name() + " is selected!", Toast.LENGTH_SHORT).show();
+
+
+
+
+
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+                // Model model = dish_model.get(position);
+                //  Toast.makeText(getApplicationContext(), model.getDish_name() + " is long selected!", Toast.LENGTH_SHORT).show();
+            }
+        }));
+
+
+
+
+
+
+
+
 
  }
 
@@ -156,8 +215,8 @@ TextView _hotel_description ,_hotel_working_hours,_hotel_location,_hotel_pickup_
 
 
 
-    public void requestData(final String uri , final int a) {
-
+    public ArrayList<String> requestData(final String uri , final int a) {
+        final ArrayList<String> types=new ArrayList<>();
         // StringRequest request = new StringRequest(uri,
         StringRequest stringRequest = new StringRequest(Request.Method.GET, uri+""+String.valueOf(id),
 
@@ -171,7 +230,7 @@ TextView _hotel_description ,_hotel_working_hours,_hotel_location,_hotel_pickup_
 
                             JSONArray _arry = null;
                             JSONObject jObj = null;
-                            ArrayList<String> types=new ArrayList<>();
+
                             try {
                                 jObj = new JSONObject(response);
 
@@ -215,6 +274,8 @@ TextView _hotel_description ,_hotel_working_hours,_hotel_location,_hotel_pickup_
         queue = Volley.newRequestQueue(getApplicationContext());
         queue.add(stringRequest);
         context=getApplicationContext();
+
+        return types;
     }
 
 
@@ -222,10 +283,10 @@ TextView _hotel_description ,_hotel_working_hours,_hotel_location,_hotel_pickup_
 
 
 
-    public void requestDishData(String uri) {
+    public void requestDishData(String uridish) {
 
         // StringRequest request = new StringRequest(uri,
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, uri,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, uridish,
 
                 new Response.Listener<String>() {
                     @Override

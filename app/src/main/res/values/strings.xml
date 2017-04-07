@@ -109,4 +109,7 @@
     <string name="title_activity_login">Login</string>
     <string name="title_activity_register">Register</string>
     <string name="title_activity_hotel_view">HotelView</string>
+    <string name="desc">I thought it wasn\'t being shown in the Android Studio preview as well, but after zooming in on the preview I can make out the faint line that is displayed.</string>
+    <string name="text_addcart">Order</string>
+    <string name="title_activity_cart">Cart</string>
 </resources>

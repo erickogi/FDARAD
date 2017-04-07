@@ -27,7 +27,12 @@ import android.support.v4.app.FragmentManager;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.erickogi14gmail.fdarad.AppSettings.LocationSettings;
 import com.erickogi14gmail.fdarad.LoginRegister.Config;
 import com.erickogi14gmail.fdarad.LoginRegister.Login;
@@ -36,10 +41,16 @@ import com.erickogi14gmail.fdarad.dishes.Model;
 import com.erickogi14gmail.fdarad.dishes.ModelAdapter;
 import com.erickogi14gmail.fdarad.dishes.fragment_dishes;
 import com.erickogi14gmail.fdarad.hotels.fragment_hotels;
+import com.erickogi14gmail.fdarad.order.Cart;
 
 import java.util.ArrayList;
 import java.util.List;
 import android.support.v7.widget.SearchView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 ImageView img;
@@ -55,7 +66,7 @@ ImageView img;
           R.drawable.ic_local_offer_black_24dp
   };
 SearchView searchView;
-
+    static RequestQueue queue ;
 
     String JsonURL = "https://raw.githubusercontent.com/ianbar20/JSON-Volley-Tutorial/master/Example-JSON-Files/Example-Object.JSON";
     // This string will hold the results
@@ -148,16 +159,16 @@ public  Context getc() {
 
                             case R.id.action_cart:
 
-                                Toast.makeText(MainActivity.this, "cart", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(MainActivity.this,Cart.class));
                             break;
 
                             case R.id.action_track:
 
-                                Toast.makeText(MainActivity.this, "track", Toast.LENGTH_SHORT).show();break;
+                                Toast.makeText(MainActivity.this, "track not yet implemented", Toast.LENGTH_SHORT).show();break;
 
                             case R.id.action_history:
 
-                                Toast.makeText(MainActivity.this, "history", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "history not yet implemented", Toast.LENGTH_SHORT).show();
                                 break;
 
                         }
@@ -240,7 +251,10 @@ viewPager.setOffscreenPageLimit(2);
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent intent=new Intent(MainActivity.this, LocationSettings.class);
+
+
+         Intent intent=new Intent(MainActivity.this, LocationSettings.class);
+           // intent.putStringArrayListExtra("A",requestData("http://erickogi.co.ke/fdarad/api/?action=get_country_locations_by_id","country_name"));
             startActivity(intent);
 
 
@@ -325,7 +339,6 @@ viewPager.setOffscreenPageLimit(2);
             return null;
         }
     }
-
 
 
 }

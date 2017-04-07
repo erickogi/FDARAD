@@ -2,6 +2,7 @@ package com.erickogi14gmail.fdarad.hotels;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -23,6 +26,7 @@ import com.erickogi14gmail.fdarad.R;
 import com.erickogi14gmail.fdarad.dishes.Model;
 import com.erickogi14gmail.fdarad.dishes.ModelAdapter;
 import com.erickogi14gmail.fdarad.order.PlaceOrder;
+import com.erickogi14gmail.fdarad.utils.HidingScrollListener;
 import com.erickogi14gmail.fdarad.utils.RecyclerTouchListener;
 
 import java.util.ArrayList;
@@ -41,7 +45,7 @@ public class fragment_hotels extends Fragment {
     static View view;
     static RequestQueue queue ;
     static RecyclerView.LayoutManager mLayoutManager;
-
+    BottomNavigationView bottomNavigationView;
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -92,8 +96,34 @@ public class fragment_hotels extends Fragment {
 
             }
         }));
+        lv.setOnScrollListener(new HidingScrollListener() {
+            @Override
+            public void onHide() {
+                hideViews();
+            }
+            @Override
+            public void onShow() {
+                showViews();
+            }
+        });
+
+        bottomNavigationView = (BottomNavigationView)
+
+                getActivity().findViewById(R.id.bottom_navigation);
 
  return  view;
+    }
+    private void hideViews() {
+        bottomNavigationView.animate().translationY(bottomNavigationView.getHeight()).setInterpolator(new AccelerateInterpolator(2));
+
+        // FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mFabButton.getLayoutParams();
+        //  int fabBottomMargin = lp.bottomMargin;
+        // mFabButton.animate().translationY(mFabButton.getHeight()+fabBottomMargin).setInterpolator(new AccelerateInterpolator(2)).start();
+    }
+
+    private void showViews() {
+        bottomNavigationView.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
+        //  mFabButton.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
     }
 
     public Context getApplicationContext() {

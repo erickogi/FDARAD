@@ -23,6 +23,7 @@
         <activity
             android:name=".order.PlaceOrder"
             android:label="@string/title_activity_place_order"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AppSettings.LocationSettings"
@@ -40,6 +41,11 @@
         <activity
             android:name=".hotels.HotelView"
             android:label="@string/title_activity_hotel_view"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".order.Cart"
+            android:label="@string/title_activity_cart"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

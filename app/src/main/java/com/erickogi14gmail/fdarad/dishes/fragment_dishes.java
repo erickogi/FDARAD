@@ -2,6 +2,7 @@ package com.erickogi14gmail.fdarad.dishes;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -10,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -21,6 +24,7 @@ import com.android.volley.toolbox.Volley;
 import com.erickogi14gmail.fdarad.MainActivity;
 import com.erickogi14gmail.fdarad.R;
 import com.erickogi14gmail.fdarad.order.PlaceOrder;
+import com.erickogi14gmail.fdarad.utils.HidingScrollListener;
 import com.erickogi14gmail.fdarad.utils.RecyclerTouchListener;
 
 import java.util.ArrayList;
@@ -40,6 +44,7 @@ public class fragment_dishes extends Fragment {
    static RequestQueue queue ;
     static RecyclerView.LayoutManager mLayoutManager;
     SwipeRefreshLayout swipe_refresh_layout;
+    BottomNavigationView bottomNavigationView;
     public void start(){
        //
       //  dish_model.clear();
@@ -74,6 +79,8 @@ public class fragment_dishes extends Fragment {
         swipe_refresh_layout.setRefreshing(false);
         lv =(RecyclerView) view.findViewById(R.id.recycle_view);
 
+
+
         getListView();
 
 
@@ -99,6 +106,8 @@ public class fragment_dishes extends Fragment {
                 intent.putExtra("dish_image",model.getDish_image());
                 intent.putExtra("dish_price",model.getDish_price());
                 intent.putExtra("dish_id",model.getDish_id());
+                intent.putExtra("dish_rating",model.getDish_ratings());
+
                 startActivity(intent);
 
 
@@ -120,12 +129,43 @@ public class fragment_dishes extends Fragment {
             }
         }));
 
+      lv.setOnScrollListener(new HidingScrollListener() {
+            @Override
+            public void onHide() {
+                hideViews();
+            }
+            @Override
+            public void onShow() {
+                showViews();
+            }
+        });
+       // View view2 = getActivity().findViewById(R.id.viewid);
 
+       bottomNavigationView = (BottomNavigationView)
 
+                getActivity().findViewById(R.id.bottom_navigation);
 
 
        return  view;
     }
+
+    private void hideViews() {
+        bottomNavigationView.animate().translationY(bottomNavigationView.getHeight()).setInterpolator(new AccelerateInterpolator(2));
+
+       // FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mFabButton.getLayoutParams();
+      //  int fabBottomMargin = lp.bottomMargin;
+       // mFabButton.animate().translationY(mFabButton.getHeight()+fabBottomMargin).setInterpolator(new AccelerateInterpolator(2)).start();
+    }
+
+    private void showViews() {
+        bottomNavigationView.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
+      //  mFabButton.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+    }
+
+
+
+
+
   //  RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
   public void requestData(String uri) {
 

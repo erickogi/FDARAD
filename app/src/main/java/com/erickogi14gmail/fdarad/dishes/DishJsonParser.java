@@ -44,8 +44,10 @@ public class DishJsonParser {
                 model.setDish_description(obj.getString("dish_description"));
                 model.setDish_price(obj.getDouble("dish_price"));
                 model.setDish_image(obj.getString("dish_image"));
-                model.setDish_accompaniments(obj.getInt("dish_ratings"));
+                model.setDish_accompaniments(obj.getInt("dish_accompaniments_id"));
                 model.setHotel_id(obj.getInt("hotel_id"));
+                model.setDish_ratings((float) obj.getDouble("dish_ratings"));
+
 
                 dish_list.add(model);
             }
